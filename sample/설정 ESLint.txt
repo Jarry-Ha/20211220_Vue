@@ -9,6 +9,31 @@ eslint를 이용한 검사
     npx eslint fileName
     npx eslint fileName --fix
 
+환경 설정 추가
+    .eslintrc.json 파일 수정
+        "extends": [
+            "eslint:recommended",
+            "airbnb"
+        ],
+
+    npx eslint fileName
+    npx eslint fileName --fix   => 수정 가능한 항목은 수정해 준다.
+
+
+rules 추가
+    체크가 필요 없다고 생각되는 항목을 추가한다
+
+    "rules": {
+        "no-var": "off",
+        "no-unused-vars": "warn"
+    }
+
+각 JS 파일에서 eslint의 체크를 하지 않도록 지정
+파일 선두에 추가한다
+
+    /* eslint-disable */
+
+
 
 prettier 설치
     npm i -D prettier eslint-config-prettier eslint-plugin-prettier
@@ -30,3 +55,24 @@ prettier 설치
 
 실행
     npx eslint filename --fix
+
+
+설정파일 작성
+참조
+https://runebook.dev/ko/docs/eslint/-index-     규칙 한국어 버전
+https://prettier.io/docs/en/configuration.html
+https://heewon26.tistory.com/262
+
+.prettierrc.json
+
+    {
+        "tabWidth": 2,
+        "printWidth": 150,
+        "singleQuote": true,
+        "trailingComma": "none",
+        "bracketSpacing": true,
+        "semi": true,
+        "useTabs": true,
+        "arrowParens": "avoid",
+        "endOfLine": "lf"
+    }
