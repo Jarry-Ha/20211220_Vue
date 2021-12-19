@@ -1,0 +1,56 @@
+설치 프로그램.
+
+Node
+    https://nodejs.org/ko/
+    다운로드는 16.XX.X 버전을 받아주세요.
+    이미 설치하신 분은 커맨드 창(도스 창)에서 다음을 확인 해 주세요.
+
+    $ npm -v
+    8.XX.X
+
+    6 이하 버전은 React가 설치되지 않을 수 있습니다.
+    구 버전을 이미 설치하신 분은 '프로그램 추가/삭제'에서 기존의 설치 프로그램을 제거 해 주세요.
+
+
+VSCode
+    https://code.visualstudio.com/ 
+    OS에 맞는 프로그램을 받아 주세요.
+
+
+Vue 수업에 참조 할 사이트
+    MDN - JavaScript
+        https://developer.mozilla.org/ko/
+    
+    JavaScript Library 검색
+        https://www.npmjs.com/
+
+    Vue 공식 홈페이지
+        https://kr.vuejs.org/index.html
+
+
+
+Vue 설치 및 프로젝트 생성
+설치
+    npm info @vue/cli
+    npm i -g @vue/cli
+
+버전 확인
+    vue --version
+
+프로젝트 생성
+    vue create template
+
+    npm i bootstrap@4       sample이 bootstrap을 이용해서 만들어짐.
+
+
+프로젝트 시작
+    cd projectName
+    npm run serve
+
+프로젝트 빌드
+    npm run build
+
+빌드 결과 확인
+    npm i -g serve          설치는 최초 1번만 합니다.
+
+    serve -s build
