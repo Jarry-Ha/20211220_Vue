@@ -1,0 +1,32 @@
+
+eslint 설치
+    npm i -D eslint@7 eslint-config-airbnb eslint-config-google
+
+eslint init
+    npx eslint --init
+
+eslint를 이용한 검사
+    npx eslint fileName
+    npx eslint fileName --fix
+
+
+prettier 설치
+    npm i -D prettier eslint-config-prettier eslint-plugin-prettier
+
+    eslint 설정 파일 수정
+    "extends": [
+            "google",
+            "eslint:recommended",
+            "prettier"
+        ],
+        ...
+        "rules": {
+            "prettier/prettier": "error",
+            "no-unused-vars": "off"
+        },
+        "plugins": [
+            "prettier"
+        ],
+
+실행
+    npx eslint filename --fix
