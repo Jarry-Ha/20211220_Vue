@@ -31,7 +31,7 @@ Babel 작업 설정
 
 
 2. babel 모듈 설치 v7 - [Global]
-    npm i -g @babel/core @babel/cli
+    npm i -g @babel/core @babel/cli             우리는 로컬에 설치할거라 실행 안함
 
 
 3. babel 모듈 설치 v7 - [Local]

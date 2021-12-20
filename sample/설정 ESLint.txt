@@ -3,6 +3,9 @@ eslint 설치
     npm i -D eslint@7 eslint-config-airbnb eslint-config-google
 
 eslint init
+    npx => node_modules에 설치된 라이브러리를 실행하는 명령
+    설치 시에 -g 옵션으로 global에 설치 한 경우는 npx 없이 바로 실행 가능.
+    
     npx eslint --init
 
 eslint를 이용한 검사

@@ -13,6 +13,11 @@ npm 명령 간략 설명
         npm info moduleName versions
 
     4. 설치
+        npm init
+        or
+        npm init -y;
+
+
         npm install -g moduleName
         npm i -g moduleName     => Global 설치
             설치한 모듈을 어느 경로에서든지 호출할 수 있다
@@ -25,6 +30,12 @@ npm 명령 간략 설명
         npm i [-g] -D moduleName
             프로젝트 작성과는 상관없는 모듈을 설치하는 경우 (프로젝트 작성과는 상관 없는 모듈)
             예] text에 관련된 모듈.
+
+        버전 지정
+            npm i bootstrap         최신 버전
+            npm i bootstrap@4       4의 마지막 버전
+            npm i bootstrap@4.1     4.1의 마지막 버전
+            npm i bootstrap@4.1.5   4.1.5와 매칭되는 버전. 없으면 설치 안됨
 
     5. 삭제
         npm un -g moduleName        npm uninstall -g moduleName
