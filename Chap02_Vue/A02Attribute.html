@@ -13,24 +13,43 @@
         <h3>A02 Attribute Binding</h3>
 
         <div >
-            <h5>1. 속성 바인딩</h5>
-            <input type="text" class="form-control">
-            <input type="text" class="form-control">
-            <input type="text">
-            <div>Hello World</div>
+            <h5>1. 속성 바인딩: {{name}}</h5>
+            Element의 속성 값으로 data의 값을 사용하는 경우 v-bind: or :을 속성 앞에 붙여서 뒤에 오는 값이 변수임을 알린다<br>
+            <!-- {{}} 또는 v-bind로 지정한 값은 단방향 바인딩이라 한다. data의 값을 꺼내와 출력만 한다 -->
+            <input type="text" class="form-control"     v-bind:value="name">
+            <input type="text" class="form-control"     :value="name">
+            <input type="text"                          :class="formCtrl" :value="name">
+            <div :style="color">Hello World</div>
         </div>
         <br>
 
         <div >
             <h5>2. 양방향 바인딩</h5>
-            <input type="text" class="form-control">
-            <input type="text" class="form-control">
-            <input type="text" class="form-control">
-            Name: 
+            <!-- 요소에서 값을 변경하면 바인딩된 data의 변수의 값을 실직적으로 변경한다. -->
+            <input type="text" class="form-control"     v-model="name">
+            <input type="text" class="form-control"     v-model="name">
+            <input type="text" class="form-control"     :value="name" @input="changeName">
+            Name: {{name}}
         </div>
         <br>
     </div>
 
-    
+    <script>
+        // type을 기술하지 않으면 표준인 text/javascript이 자동 할당됨
+        var app = new Vue({
+            el: '#app',
+            data: {
+                name: 'NolBu',
+                formCtrl: 'form-control',
+                // css의 명령중 -가 있으면 -를 생략하고 그 뒤 첫 글자를 대문자로 변경 => 카멜 표시법
+                color: {backgroundColor: 'lightgray', color: 'white', fontSize: '20pt'}
+            },
+            methods: {
+                changeName: function(evt) {
+                    this.name = evt.target.value;
+                }
+            }
+        })
+    </script>
 </body>
 </html>

@@ -14,19 +14,23 @@
         <br>
 
         <h5>1. v-show</h5>
-        <div>
+        <div v-show="check">
+            지시자는 지정한 값을 모두 변수로 취급한다. v-show는 DOM이 지워지지는 않고 CSS에 의해 숨김 처리된다.<br>
             v-show가 있는 엘리먼트는 항상 렌더링 되고 DOM에 남아있다는 점입니다. v-show는 단순히 엘리먼트에 display CSS 속성을 토글합니다.
         </div>
         <br />
 
         <h5>2. v-if</h5>
-        <div>
+        이 구문은 연속적인 태그 형태로 구현되어 있어야 한다. Element가 새롭게 생성 또는 삭제되면서 작성된다<br>
+        CSS구조가 깨질 수 있음(주의)
+        
+        <div v-if="name === 'nolbu' ">
             Vue에서는 v-if 디렉티브를 사용하여 조건부 블럭을 작성할 수 있습니다.
         </div>
-        <div>
+        <div  v-else-if="name === 'hungbu' ">
             v-else-if는 이름에서 알 수 있듯, v-if에 대한 “else if 블록” 역할을 합니다. 또한 여러 개를 사용할 수 있습니다.
         </div>
-        <div>
+        <div v-else>
             v-else 디렉티브를 사용하여 v-if에 대한 “else 블록”을 나타낼 수 있습니다
         </div>
         <br>
@@ -49,15 +53,15 @@
         <br>
 
         <div>
-            <button class="btn btn-outline-primary btn-sm" >Check</button>
-            <button class="btn btn-outline-primary btn-sm" >IF</button>
-            <button class="btn btn-outline-primary btn-sm" >Else IF</button>
-            <button class="btn btn-outline-primary btn-sm" >Else</button><br>
+            <button class="btn btn-outline-primary btn-sm" @click="check = !check">Check</button>
+            <button class="btn btn-outline-primary btn-sm" @click="name = 'nolbu' ">IF</button>
+            <button class="btn btn-outline-primary btn-sm" @click="name = 'hungbu' ">Else IF</button>
+            <button class="btn btn-outline-primary btn-sm" @click="name = 'abc' ">Else</button><br>
         </div>
     </div>
 
     <script type="text/javascript">
-        let model = {
+        var model = {
             students: [
                 { name: 'HongGilDong', age: 20, kor: 100, eng: 80 },
                 { name: 'NolBu', age: 50, kor: 90, eng: 90 },
@@ -65,16 +69,20 @@
             ]
         }
 
-        const app = new Vue({
+        var app = new Vue({
             el: '#app',
             data: {
                 check: true,
                 name: 'nolbu',
+                students: model.students
             },
             methods: {
                 
             },
-        })
+        });
+
+        console.log(app);
+        console.log(app.name)
     </script>
 </body>
 </html>

@@ -50,17 +50,18 @@
 
             v-text: <span v-text="text"></span><br>
             v-html: <span v-html="text"></span><br>
-            v-once: <span></span><br>
-            v-pre: <span></span><br>
+            v-once: <span v-once>{{text}}</span><br>    <!-- 변수의 값이 변경되도 1번만 바인딩되고 변경 안되도록 하겠다 -->
+            v-pre: <span v-pre>{{pre}}</span><br>       <!-- {{}}를 바인딩 표현법인 아닌 일반 텍스트로 사용 -->
             <br>
-            <button>Change</button>
-            <button>Change</button>
+            <button v-on:click="changeText('Hello World')">Change</button>
+            <button @click="changeText('Hi World')">Change</button>
             <br>
         </div>
 
         <div>
-            Data에 존재하지 않는 변수: 
-            Data에 존재하지 않는 객체: 
+            data에 정의되지 않은 기본형, 참조형 변수를 정의하면 에러.
+            <!-- Data에 존재하지 않는 변수: {{num}} -->
+            <!-- Data에 존재하지 않는 객체: {{obj.name}} -->
         </div>
         <br>
     </div>
@@ -86,7 +87,14 @@
                     // console.log('Arrow ', this);                 // window
                     console.log(this.title)
                     return x + ' - ' + y + ' = ' + (x - y);
+                },
+                changeText: function(text) {
+                    // 내부 data 변수는 this로 참조한다. Arrow 함수는 안됨(this가 window)
+                    this.text = '<b><i>' + text + '</i></b>';
                 }
+            },
+            computed: {
+
             }
         })
     </script>
