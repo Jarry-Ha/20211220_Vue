@@ -72,6 +72,8 @@ const obj = { name: 'NolBu', age: 30 };
 obj.address = 'Seoul';
 obj.name = '놀부';
 
+// obj = {};            // obj 주소값이 변경되므로 에러
+
 console.log(arr);
 console.log(obj);
 
