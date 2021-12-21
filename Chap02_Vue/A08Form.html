@@ -41,31 +41,31 @@
             <br>
 
             SelectBox: <span class="orange">{{data.inCurr}}</span><br>
-            <select class="form-control">
-                
+            <select class="form-control" v-model="data.inCurr">
+                <option v-for="item in currencies" :key="item">{{item}}</option>
             </select>
             <br>
 
             SelectBox Multi: <span class="orange">{{data.lang}}</span><br>
-            <select class="form-control" multiple>
-                
+            <select class="form-control" multiple       v-model="data.lang">
+                <option v-for="(item, i) in language" :key="i">{{item}}</option>
             </select>
             <br>
 
             TextArea: <span class="orange">{{data.comment}}</span>
-            <textarea cols="50" rows="5" class="form-control"></textarea>
+            <textarea cols="50" rows="5" class="form-control"   v-model="data.comment"></textarea>
             <br>
 
 
-            Radio Button Object Value: <span class="orange">{{data.person}}</span><br>
-            <input type="radio" name="person">놀부
-            <input type="radio" name="person">흥부
-            <input type="radio" name="person">방자 <br>
+            Radio Button Object Value: <span class="orange">{{data.person}} / {{data.person.name}}</span><br>
+            <input type="radio" name="person"   v-model="data.person" :value="{name: 'Nolbu', age: 30}">놀부
+            <input type="radio" name="person"   v-model="data.person" :value="{name: 'HungBu', age: 25}">흥부
+            <input type="radio" name="person"   v-model="data.person" :value="{name: 'BangJa', age: 20}">방자 <br>
             <br>
 
 
             Text Field: <span class="orange">{{data.name}}</span>
-            <input type="text" class="form-control"><br>
+            <input type="text" class="form-control"     :value="data.name"  @input="changeValue"><br>
             <br>
 
             <button type="submit" @click.prevent="sendData">SEND</button>
@@ -85,14 +85,25 @@
                     check: true,
                     fruit: ['apple'],
                     inCurr: 'EUR',
-                    currencies: ['USD', 'EUR', 'CNY'],
+                    // currencies: ['USD', 'EUR', 'CNY'],
                     lang: ['한국어'],
-                    language: ['한국어', '영어', '프랑스어', '독일어', '스페인어'],
+                    // language: ['한국어', '영어', '프랑스어', '독일어', '스페인어'],
                     comment: '',
                     person: {}
                 }
             },
+            computed: {
+                currencies: function() {
+                    return ['USD', 'EUR', 'CNY']
+                },
+                language: function() {
+                    return ['한국어', '영어', '프랑스어', '독일어', '스페인어']
+                }
+            },
             methods: {
+                changeValue: function(evt) {
+                    this.data.name = evt.target.value
+                },
                 sendData: function() {
                     console.log(this.data);
                 }

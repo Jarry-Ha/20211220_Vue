@@ -12,14 +12,14 @@
     <div class="card-body" id="app">
         <h3>A10 Currency</h3>
 
-        Qty: <input type="text" class="form-control">
-        Cost: <input type="text" class="form-control">
+        Qty: <input type="text" class="form-control"        v-model.number="qty">
+        Cost: <input type="text" class="form-control"       v-model.number="cost">
         Country: 
-            <select class="form-control">
-                
+            <select class="form-control"    v-model="inCurr">
+                <option v-for="item in currencies" :value="item">{{item}}</option>
             </select>
         <br>
-        <div>Total: </div>
+        <div>Total: {{ qty * cost }}</div>
         <div>Total: <span></span></div>
     </div>
 
@@ -27,7 +27,15 @@
         new Vue({
             el: '#app',
             data: {
-
+                qty: 3,
+                cost: 5,
+                inCurr: 'USD',
+                // currencies: ['USD', 'EUR', 'CNY'],
+                // rate: { USD: 1, EUR: 1.35, CNY: 6.87}
+            },
+            computed: {
+                currencies: function(){ return ['USD', 'EUR', 'CNY'] },
+                rate: function(){ return { USD: 1, EUR: 1.35, CNY: 6.87} }
             },
             methods: {
                 
