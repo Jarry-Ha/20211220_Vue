@@ -24,8 +24,8 @@
             <div class="input-group">
                 <input type="text" class="form-control" ref="txtField">
                 <div class="input-group-append">
-                    <button class="btn btn-primary">SEND TEXT</button>
-                    <button class="btn btn-danger">SEND OBJECT</button>
+                    <button class="btn btn-primary" @click="sendTextEvent">SEND TEXT</button>
+                    <button class="btn btn-danger" @click="sendObjEvent">SEND OBJECT</button>
                 </div>
             </div>
         </div>
@@ -40,21 +40,40 @@
                 }
             },
             methods: {
-                
+                sendTextEvent: function() {
+                    // event 이름은 소문자로만 구성되어야 한다. cli에서는 상관 없음
+                    // 내부적으로 sendtext라는 custom 이벤트를 생성하고 발생시킨다
+                    // this.$emit('eventname', 전달데이터)
+                    this.$emit('sendtext', this.$refs.txtField.value);
+                },
+                sendObjEvent: function() {
+                    var data = {
+                        msg: this.$refs.txtField.value,
+                        title: this.title,
+                        user: this.user,
+                        greet: 'Hello World'
+                    }
+                    this.$emit('sendobject', data);
+                }
             }
         });
     </script>
 
     <template id="parentTemp">
         <div>
-            <child-comp></child-comp>
+
+            <!-- 내부에서 sendtext 이벤트가 버튼을 클릭하면 발생한다 -->
+            <child-comp @sendtext="getText" @sendobject="getObject"></child-comp>
+
             <hr>
             <h4>Parent Component</h4>
             <div>Message: {{msg}}</div>
             <div>
-                Message: <br>
-                Title: <br>
-                User: 
+                클릭 전까지는 데이터가 null이라 값 출력할 항목이 없어서 error<br>
+                Message: {{msg}} / {{data && data.msg}} <br>
+                Title: {{data && data.title}} <br>
+                User: {{data && data.user.name}} / {{data && data.user.age}}<br >
+                Greet: {{data && data.greet}}
             </div>
         </div>
     </template>
@@ -68,7 +87,15 @@
                 }
             },
             methods: {
-                
+                getText: function(data) {       // sendtext로 전달한 이벤트 값이 매개변수로 전달된다.
+                    // console.log(data)
+                    this.msg = data;
+                },
+                getObject: function(data) {
+                    this.msg = data.msg;
+                    // console.log(data)
+                    this.data = data;
+                }
             }
         })
     </script>

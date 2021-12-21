@@ -6,18 +6,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <script type="text/javascript" src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
-    <title>A02 Component Props</title>
+    <title>A04 Component Props</title>
 </head>
 <body>
 
     <div class="card-body" id="app">
         <h3>A04 Component Props</h3>
 
-        
+        속성으로 하위 컴퍼넌트에 app가 가지고 있는 값을 전달 할 수 있다.<br>
+        카멜 표기법의 이름은 - 플어서 전달. cli에서는 이름 그대로 사용 가능<br>
+        <comp-one name="놀부" :age=30 v-bind:address="address" :arr="ary" :user="user"
+            :on-plus="onPlus" is-checked ></comp-one>
+        <br>
+        <div>
+            <button @click="changeAddress">Address</button>
+        </div>
     </div>
+
+    <template id="tempOne">
+        <div>
+            Name: {{name}}<br>
+            Age: {{age + 100}}<br>
+            Address: {{address}}<br>
+            Array: {{arr[0]}} / {{arr[1]}} / {{arr[10]}}<br>
+            user: {{user.name}} / {{user.age}} / {{user.address}}<br>
+            onPlus: {{onPlus(10, 20)}}<br>
+            isChecked: {{ isChecked ? 'TRUE' : 'FALSE' }}<br>
+            <br>
+            Num: {{num}}
+        </div>
+    </template>
+    <script>
+        Vue.component('compOne', {
+            template: '#tempOne',
+            // 속성의 이름을 문자열 형태로 나열한다. 값은 기본적으로는 문자열.
+            // 내부에서 사용할 수 있는 읽기 전용 변수로 정의된다.
+            // props: ['name', 'age', 'address', 'arr', 'user', 'onPlus', 'isChecked']
+            props: {
+                name: String,
+                age: {
+                    type: Number,
+                    defalut: 0,
+                    required: true
+                },
+                address: String,
+
+                // 리퍼런스의 default 값은 함수의 리턴 값이 되어야 한다.
+                arr: {
+                    type: Array,
+                    default: function() {
+                        return []
+                    },
+                    validator: function(value) {        // value가 실질적으로 넘어오는 값
+                        if(value.length >= 3) return true;
+                        else return false;              // console에 error가 표시된다.
+                    }
+                },
+                user: {
+                    type: Object,
+                    default: function() {
+                        return {name: 'unknown', age: 0}
+                    },
+                    validator: function(value) {
+                        if(value.name) return true;
+                        else return false;
+                    }
+                },
+                onPlus: {
+                    type: Function,
+                    default: function() {
+                        return function(x, y) { return x + y }
+                    },
+                    validator: function(value) {
+                        return typeof(value(10, 20) === 'string')
+                    }
+                },
+                isChecked: Boolean,
+                num: {
+                    type: Number,
+                    default: 1000
+                }
+            }
+        });
+    </script>
+
     
     <script type="text/javascript">
-        Vue.config.devtools = true
         var app = new Vue({
             el: '#app',
             data: {
@@ -28,6 +102,9 @@
             methods: {
                 onPlus: function(x, y) {
                     return `${x} + ${y} = ${x + y}`
+                },
+                changeAddress: function() {
+                    this.address = 'Busan';
                 }
             }
         });
