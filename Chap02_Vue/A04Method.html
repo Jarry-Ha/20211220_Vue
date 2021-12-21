@@ -14,21 +14,21 @@
 
         <div>
             <h5>1. Method</h5>
-            onPlus: <br>
+            onPlus: {{onPlus(10, 20)}}<br>
             <br>
             Name: {{name}}
-            <input type="text" name="name" class="form-control">
+            <input type="text" name="name" class="form-control" :value="name" @input="changeString">
             Num: {{num}}
-            <input type="text" name="num" class="form-control">
+            <input type="text" name="num" class="form-control"  :value="num" @input="changeNumber">
         </div>
         <br>
 
         <div>
             <h5>2. Computed</h5>
-            Computed: <br>
-            Methods: <br>
+            Computed: {{ total }}<br>     <!-- 함수 형태로 작성했지만 속성으로 사용한다 -->
+            Methods: {{ totalMethod() }}<br>
             <br>
-            Computed Params: 
+            Computed Params: {{ totalParam(100) }}
         </div>
     </div>
 
@@ -39,7 +39,50 @@
                 name: 'NolBu',
                 num: 10
             },
-
+            methods: {
+                onPlus: function(x, y) {
+                    var result = x + y;
+                    return result;
+                },
+                changeString: function(evt) {
+                    // console.log(evt.target);
+                    this.name = evt.target.value;
+                },
+                changeNumber: function(evt) {
+                    var result = Number(evt.target.value);          // 문자라면 NaN 값이 result에 대입됨.
+                    if(isNaN(result)) result = 0;
+                    this.num = result;
+                },
+                totalMethod: function() {
+                    console.log('method total');
+                    var sum = 0;
+                    for(var i = 1; i <= this.num; i++) {
+                        sum += i;
+                    }
+                    return sum;
+                }
+            },
+            computed: {
+                // getter와 비슷한 역할을 한다. 함수로 정의하지만 프로퍼티(변수) 형태로 사용한다. 계산된 속성이라 한다
+                total: function() {                                 // 보통 매개변수가 없도록 구현
+                    console.log('computed total');
+                    var sum = 0;
+                    for(var i = 1; i <= this.num; i++) {
+                        sum += i;
+                    }
+                    return sum;
+                },
+                totalParam: function() {                        // 의미 없음. 항상 새롭게 만들어짐. method로 분리하자.
+                    return function(num) {
+                        console.log('computed param total');
+                        var sum = 0;
+                        for(var i = 1; i <= num; i++) {
+                            sum += i;
+                        }
+                        return sum;
+                    }
+                }
+            }
         })
     </script>
 </body>
