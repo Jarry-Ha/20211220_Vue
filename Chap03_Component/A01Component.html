@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+    <title>A01 Component</title>
+</head>
+<body>
+
+    <div class="card-body" id="app">
+        <h3>A01 Component</h3>
+
+        컴퍼넌트 이름이 카멜 표기법(compOne)이면 - 표기법으로 분리해서 기술(CLI에서는 그냥 사용 가능)<br>
+        종료 태그가 반드시 필요하다.<br>
+        <br>
+
+        <comp-one></comp-one>
+        <comp-one></comp-one>
+        <br>
+
+        <comp-two></comp-two>
+        <br>
+
+        <comp-three></comp-three>
+        <br>
+        <hr>
+
+        <comp-four></comp-four>
+
+        <hr>
+        기존 태그를 이용해서 렌더링. div로 렌더링된다.
+        <div :is="currentView"></div>
+
+    </div>
+
+    <!-- component에서 사용할 view. 요소는 단일 요소만 리턴되서 사용된다 -->
+    <template id="tempTwo">
+        <div>
+            <h3>Component Two</h3>
+            <div>This is Component Two</div>
+        </div>
+        <!-- <div>Hello World</div> -->
+    </template>
+
+    <!-- script로도 view를 생성할 수 있음-->
+    <script type="text/x-template" id="tempThree">
+        <div>
+            <h3>Component Three</h3>
+            <div>This is Component Three</div>
+        </div>
+    </script>
+
+    <!-- 작성된 view를 조합해서 사용할 수도 있음-->
+    <template id="tempFour">
+        <div>
+            <comp-one></comp-one>
+            <comp-two></comp-two>
+        </div>
+    </template>
+
+    <script type="text/javascript">
+
+        Vue.component('compOne', {
+            template: `
+                <div>
+                    <h3>Component One</h3>
+                    <div>This is Component One</div>
+                </div>
+            `
+        });
+
+        Vue.component('compTwo', {
+            template: '#tempTwo'
+        });
+
+        Vue.component('compThree', {
+            template: '#tempThree'
+        });
+
+        Vue.component('compFour', {
+            template: '#tempFour'
+        });
+        
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                currentView: 'comp-three'
+            }
+        });
+    </script>
+</body>
+</html>
