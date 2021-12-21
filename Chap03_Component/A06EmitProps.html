@@ -21,6 +21,7 @@
     <!-- List Component -->
     <template id="listTemp">
         <div>
+            <div>Search Keyword: {{search}}</div>
             <table class="table">
               <thead>
                   <tr>
@@ -28,7 +29,12 @@
                   </tr>
               </thead>
               <tbody id="contacts" >
-                  
+                  <tr v-for="item in contactList" :key="item.no">
+                    <td>{{item.no}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.tel}}</td>
+                    <td>{{item.address}}</td>
+                  </tr>
               </tbody>
             </table>
           </div>
@@ -36,6 +42,7 @@
     <script type="text/javascript">
         Vue.component('listComp', {
             template: '#listTemp',
+            props: ['search', 'contactList']
         });
     </script>
 
@@ -45,23 +52,35 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">이름</span>
             </div>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" v-model.trim="name" @keyup.enter="searchKeyword">
         </div>
     </template>
     <script type="text/javascript">
         Vue.component('searchComp', {
             template: '#searchTemp',
+            data: function() {
+                return {
+                    name: ''
+                }
+            },
+            methods: {
+                searchKeyword: function(evt) {
+                    // console.log(evt.target.value);
+                    var result = evt.target.value;
+                    if(result.length >= 2) this.$emit('search', result);
+                }
+            }
         })
     </script>
 
     <!-- combine Component -->
     <template id="combineTemp">
         <div>
-            <search-comp></search-comp>
+            <search-comp @search="getValue"></search-comp>
             <br>
-            <list-comp></list-comp>
+            <list-comp :search="search" :contact-list="contactList"></list-comp>
 
-            <div>조회중...</div>
+            <div v-show="isLoading">조회중...</div>
         </div>
     </template>
     <script type="text/javascript">
@@ -70,11 +89,25 @@
             data: function(){
                 return {
                     contactList: [],
+                    search: '',
                     isLoading: false,
                 }
             },
             methods: {
                 // http://sample.bmaster.kro.kr/contacts_long/search/
+                getValue: function(data) {
+                    this.search = data;
+                    this.isLoading = true;
+
+                    axios.get('http://sample.bmaster.kro.kr/contacts_long/search/' + data)
+                    // then 함수 내부의 익명함수는 반드시 Arrow 함수로 기술해야 한다.
+                    .then( resp => {
+                        console.log(resp.data);
+                        this.contactList = resp.data;
+                        this.isLoading = false;
+                    })
+                    .catch( error => console.error(error) );
+                }
             }
         })
     </script>

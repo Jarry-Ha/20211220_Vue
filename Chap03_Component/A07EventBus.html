@@ -8,7 +8,7 @@
     <script type="text/javascript" src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.2.8/es6-promise.min.js"></script>
-    <title>A06 Emit And Props</title>
+    <title>A07 EmitBus</title>
 </head>
 <body>
     <div class="card-body" id="app">
@@ -18,9 +18,15 @@
 
     </div>
 
+    <!-- EventBus -->
+    <script type="text/javascript">
+        var EventBus = new Vue();
+    </script>
+
     <!-- List Component -->
     <template id="listTemp">
         <div>
+            <div>Search Keyword: {{search}}</div>
             <table class="table">
               <thead>
                   <tr>
@@ -28,7 +34,12 @@
                   </tr>
               </thead>
               <tbody id="contacts" >
-                  
+                  <tr v-for="item in contactList" :key="item.no">
+                    <td>{{item.no}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.tel}}</td>
+                    <td>{{item.address}}</td>
+                  </tr>
               </tbody>
             </table>
           </div>
@@ -36,6 +47,7 @@
     <script type="text/javascript">
         Vue.component('listComp', {
             template: '#listTemp',
+            props: ['search', 'contactList']
         });
     </script>
 
@@ -45,20 +57,23 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">이름</span>
             </div>
-            <input type="text" class="form-control" v-model.trim="name" :placeholder="placeholder"/>
+            <input type="text" class="form-control" v-model.trim="name" @keyup.enter="searchKeyword">
         </div>
     </template>
     <script type="text/javascript">
         Vue.component('searchComp', {
             template: '#searchTemp',
-            data: function(){
+            data: function() {
                 return {
                     name: ''
                 }
             },
-            props: ['placeholder'],
             methods: {
-                
+                searchKeyword: function(evt) {
+                    var result = evt.target.value;
+                    // 지금 작성한 EmitBus도 Vue 객체라 $emit을 가지고 있다. 그 $emit을 이용
+                    if(result.length >= 2) EventBus.$emit('search', result);
+                }
             }
         })
     </script>
@@ -66,9 +81,9 @@
     <!-- combine Component -->
     <template id="combineTemp">
         <div>
-            <search-comp placeholder="두 글자 이상 입력 후 엔터."></search-comp>
+            <search-comp @search="getValue"></search-comp>
             <br>
-            <list-comp></list-comp>
+            <list-comp :search="search" :contact-list="contactList"></list-comp>
 
             <div v-show="isLoading">조회중...</div>
         </div>
@@ -79,11 +94,30 @@
             data: function(){
                 return {
                     contactList: [],
+                    search: '',
                     isLoading: false,
                 }
             },
+            // 변수, 함수가 다 할당된 시점에서 EventBus에 전달된 이벤틀를 체크하고 이벤트 객체가 전달되면 그 값을 가져와 사용
+            created: function(){
+                // 이벤트 발생 여부를 체크는 $on
+                EventBus.$on('search', this.getValue)
+            },
             methods: {
-                
+                // http://sample.bmaster.kro.kr/contacts_long/search/
+                getValue: function(data) {
+                    this.search = data;
+                    this.isLoading = true;
+
+                    axios.get('http://sample.bmaster.kro.kr/contacts_long/search/' + data)
+                    // then 함수 내부의 익명함수는 반드시 Arrow 함수로 기술해야 한다.
+                    .then( resp => {
+                        console.log(resp.data);
+                        this.contactList = resp.data;
+                        this.isLoading = false;
+                    })
+                    .catch( error => console.error(error) );
+                }
             }
         })
     </script>
