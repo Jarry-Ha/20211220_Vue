@@ -18,14 +18,17 @@
         <br>
 
         Num: {{num}}<br>
-        <button>+1</button>
-        <button>-1</button>
-        <button>once</button>
+        <button v-on:click="num++">+1</button>
+        <button v-on:click="decrease">-1</button>
+        <button v-on:click.once="decrease">once</button>
 
-        <button >Key</button>
+        <!-- shift, alt, ctrl / left, right, middle-->
+        <button @click.shift="decrease">Key</button>
 
-        <button>Event</button>
-        <button>Event</button>
+        <button @click="increase(2)">Event</button>
+        <button @click="increaseEvent($event, 2)">Event</button> <!-- $event => event 객체를 전달해 준다 -->
+        <button @click="(evt) => increaseEvent(evt, 2)">Event</button>
+        <button @click="increaseCall">Event</button>
         <br>
         <br>
         
@@ -57,7 +60,20 @@
                 msg: ''
             },
             methods: {
-                
+                decrease: function() {
+                    this.num--;
+                },
+                increase: function(num) {
+                    this.num += num;
+                },
+                increaseEvent: function(evt, num) {
+                    this.num += num;
+                    console.log(evt.target)
+                },
+                increaseCall: function(evt) {
+                    console.log(evt);
+                    this.increase(3);
+                }
             },
         })
     </script>

@@ -10,12 +10,12 @@
 </head>
 <body>
     <div class="card-body" id="app">
-        <h3>A05 Computed</h3>
+        <h3>A05 Computed: {{countryname}}</h3>
 
         <div class="input-group">
-            <input type="text" name="searc" class="form-control">
-            <div class="input-group-append">
-                <button class="btn btn-primary">SEARCH</button>
+            <input type="text" name="searc" class="form-control" ref="inputRef">
+            <div class="input-group-append" ref="divRef">
+                <button class="btn btn-primary" @click="getCountryName">SEARCH</button>
             </div>
         </div>
         <br>
@@ -26,7 +26,12 @@
                 </tr>
             </thead>
             <tbody>
-                
+                <tr v-for="item in searchData" :key="item.no">
+                    <td>{{ item.no }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.capital }}</td>
+                    <td>{{ item.region }}</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -57,11 +62,25 @@
         new Vue({
             el: '#app',
             data: model,
+            mounted: function() {
+                console.log(this.$refs);                    // vue에서는 전역 속성 $변수명 형태로 제공
+                this.$refs.inputRef.focus();
+            },
             methods: {
-                
+                getCountryName: function() {
+                    this.countryname = this.$refs.inputRef.value;
+                }
             },
             computed: {
-                
+                searchData: function() {
+                    var data = [];
+                    for(var i = 0; i < this.countries.length; i++) {
+                        var country = this.countries[i];
+                        // include
+                        if(country.name.indexOf(this.countryname) !== -1) data.push(country);
+                    }
+                    return data;
+                }
             },
             
         })

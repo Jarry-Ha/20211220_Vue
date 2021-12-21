@@ -14,7 +14,8 @@ var students = [
 //     console.log(students[i])
 // };
 
-// ES6
+// ES6 => Iterator 객체를 순환
+// next({done: false})를 호출
 for( item of students ) {                   // item은 값
     console.log(item)
 }

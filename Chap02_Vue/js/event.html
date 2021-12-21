@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event</title>
+    <script>
+
+        function btn03Event(evt) {
+            console.log(evt);
+        }
+
+        function btn04Event(evt, name) {
+            console.log(evt.target, name);
+        }
+
+        window.addEventListener('load', function(){
+            console.log('모든 문서 읽기 완료');
+
+            var btn02 = document.getElementById('btn02');
+            btn02.addEventListener('click', function(evt){
+                console.log(evt.target)
+            });
+
+            var btn03 = document.getElementById('btn03');
+            btn03.addEventListener('click', btn03Event);
+
+            document.getElementById('btn04').addEventListener('click', function(evt){
+                btn04Event(evt, 'NolBu')
+            })
+        });
+    </script>
+</head>
+<body>
+    <h3>Event</h3>
+
+    <div>
+        <button id="btn01" onclick="alert('Hello World')">Button 01</button>
+        <button id="btn02">Button 02</button>
+        <button id="btn03">Button 03</button>
+        <button id="btn04">Button 04</button>
+    </div>
+
+    <script>
+        
+    </script>
+</body>
+</html>
