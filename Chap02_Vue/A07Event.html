@@ -32,23 +32,29 @@
         <br>
         <br>
         
-        <div id="container">
-        <div id="inner">ONE</div>
-        <div id="inner">TWO</div>
+        <div id="container" @click="outer">
+            <div id="inner" @click="innerOne">ONE</div>
+            <div id="inner" @click.stop="innerTwo">TWO</div> <!-- evt.stopPropagation() -->
         </div>
         <br>
         <br>
 
         <div>
-            <a href="http://www.daum.net">DAUM</a> |
-            <a href="http://www.naver.com">NAVER</a> |
+            JavaScript의 일부 Element 요소는 DOM이 만들어질때 JavaScript 기능이 추가되는 요소가 있다<br>
+            <a href="http://www.daum.net" @click="daum">DAUM</a> |
+            <a href="http://www.naver.com" @click.prevent="naver">NAVER</a> |   <!-- evt.preventDefault() -->
         </div>
         <br>
 
-        <input type="text" class="form-control"><br>
-        esc: <input type="text" class="form-control" v-model="name"/><br>
-        Enter: <input type="text" class="form-control" v-model="msg"/><br>
-        Esc OR Enter<input type="text" class="form-control"/><br>
+        <input type="text" class="form-control"     @keyup="keyUpEvent"><br>
+        esc: <input type="text" class="form-control" v-model="name"     @keyup.esc="escEvent" /><br>
+        Enter: <input type="text" class="form-control" v-model="msg"    @keyup.enter="enterEvent" /><br>
+
+        <!-- 조합이 아니라 각각 따로 동작한다 -->
+        Esc OR Enter<input type="text" class="form-control"             @keyup.esc.enter="alertEvent" /><br>
+
+        <!-- 다른 키는 조합이 가능하다. 같이 눌러져야 함 -->
+        Shift AND A<input type="text" class="form-control"              @keyup.shift.65="plusEvent" /><br>
     </div>
 
     <script type="text/javascript">
@@ -73,6 +79,57 @@
                 increaseCall: function(evt) {
                     console.log(evt);
                     this.increase(3);
+                },
+                // stopPropagation
+                outer: function(evt) {
+                    console.log('outer=> ', evt.currentTarget);
+                    console.log('outer=> ', evt.target);
+                },
+                innerOne: function(evt) {
+                    evt.stopPropagation();
+                    console.log('innerOne=> ', evt.currentTarget);
+                    console.log('innerOne=> ', evt.target);
+                },
+                innerTwo: function(evt) {
+                    console.log('innerTwo=> ', evt.currentTarget);
+                    console.log('innerTwo=> ', evt.target);
+                },
+                // preventDefault()
+                daum: function(evt) {
+                    evt.preventDefault();           // 추가된 JavaScript 기능을 실행 안하도록 지시
+                    console.log(evt.target);
+                },
+                naver: function(evt) {
+                    console.log(evt.target);
+                },
+                // key EVent
+                keyUpEvent: function(evt) {
+                    console.log('key=> ', evt.key);
+                    console.log('code=> ', evt.code);
+                    console.log('keyCode=> ', evt.keyCode);
+                    console.log(evt.shiftKey, evt.altKey, evt.ctrlKey, evt.metaKey);
+                    if(evt.keyCode === 36 && evt.shiftKey) location.assign('http://google.com');
+                },
+                escEvent: function(evt) {
+                    this.name = '';
+                },
+                enterEvent: function(evt) {
+                    if(evt.target.value.length < 10) {
+                        alert('10자 이상 입력해 주세요');
+                        evt.target.focus();
+                    }
+                },
+                alertEvent: function(evt) {
+                    if(evt.target.value.length < 20) {
+                        alert('20자 이상 입력해 주세요');
+                        evt.target.focus();
+                    }
+                },
+                plusEvent: function(evt) {
+                    if(evt.target.value.length < 20) {
+                        alert('20자 이상 입력해 주세요');
+                        evt.target.focus();
+                    }
                 }
             },
         })

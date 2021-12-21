@@ -14,30 +14,30 @@
         <br>
 
         <form>
-            Text Field: <span class="orange">{{data.name}}</span>
-            <input type="text" class="form-control"><br>
+            Text Field: <span class="orange">{{data.name}} / {{data.name.length}}</span>
+            <input type="text" class="form-control"     v-model.trim="data.name"><br>
 
             Number Field: <span class="orange">{{data.age + 10}}</span>
-            <input type="text" class="form-control"><br>
+            <input type="text" class="form-control"     v-model.number="data.age"><br>
 
-            Lazy Field: <span class="orange">{{data.address}}</span>
-            <input type="text" class="form-control"><br>
+            Lazy Field: <span class="orange">{{data.address}}: focus가 이동되면 반영된다.</span>
+            <input type="text" class="form-control"     v-model.lazy="data.address"><br>
 
 
             Radio Button: <span class="orange">{{data.gender}}</span><br>
-            <input type="radio" name="gender" value="남자">Male
-            <input type="radio" name="gender" value="여자">Female
-            <input type="radio" name="gender" value="어린이">Children <br>
+            <input type="radio" name="gender" value="남자"      v-model="data.gender">Male
+            <input type="radio" name="gender" value="여자"      v-model="data.gender">Female
+            <input type="radio" name="gender" value="어린이"     v-model="data.gender">Children <br>
             <br>
 
-            Single Check: <span class="orange">{{data.check}}</span><br>
-            <input type="checkbox" name="check">Agree<br>
+            Single Check: <span class="orange">{{data.check ? '동의' : '동의 안함'}}</span><br>
+            <input type="checkbox" name="check"     v-model="data.check">Agree<br>
             <br>
 
             CheckBox: <span class="orange">{{data.fruit}}</span><br>
-            <input type="checkbox" value="apple">사과,
-            <input type="checkbox" value="banana">바나나,
-            <input type="checkbox" value="melon">멜론<br>
+            <input type="checkbox" value="apple"    v-model="data.fruit">사과,
+            <input type="checkbox" value="banana"   v-model="data.fruit">바나나,
+            <input type="checkbox" value="melon"    v-model="data.fruit">멜론<br>
             <br>
 
             SelectBox: <span class="orange">{{data.inCurr}}</span><br>
@@ -68,7 +68,7 @@
             <input type="text" class="form-control"><br>
             <br>
 
-            <button type="submit">SEND</button>
+            <button type="submit" @click.prevent="sendData">SEND</button>
         </form>
 
     </div>
@@ -78,7 +78,7 @@
             el: '#app',
             data: {
                 data: {
-                    name: ' NolBu',
+                    name: '   NolBu   ',
                     age: '',
                     address: '',
                     gender: '남자',
@@ -93,7 +93,9 @@
                 }
             },
             methods: {
-                
+                sendData: function() {
+                    console.log(this.data);
+                }
             }
         })
     </script>
