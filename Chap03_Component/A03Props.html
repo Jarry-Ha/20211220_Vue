@@ -13,26 +13,38 @@
     <div class="card-body" id="app">
         <h3>A03 Component Props</h3>
 
-        <comp-one></comp-one>
+        속성으로 하위 컴퍼넌트에 app가 가지고 있는 값을 전달 할 수 있다.<br>
+        카멜 표기법의 이름은 - 플어서 전달. cli에서는 이름 그대로 사용 가능<br>
+        <comp-one name="놀부" :age=30 v-bind:address="address" :arr="ary" :user="user"
+            :on-plus="onPlus" is-checked ></comp-one>
+        <br>
+        <div>
+            <button @click="changeAddress">Address</button>
+        </div>
     </div>
 
     <template id="tempOne">
         <div>
-            Name: <br>
-            Age: <br>
-            User: <br>
-            Array: <br>
-            onPlus: <br>
-            isChecked: <br>
+            Name: {{name}}<br>
+            Age: {{age + 100}}<br>
+            Address: {{address}}<br>
+            Array: {{arr[0]}} / {{arr[1]}} / {{arr[10]}}<br>
+            user: {{user.name}} / {{user.age}} / {{user.address}}<br>
+            onPlus: {{onPlus(10, 20)}}<br>
+            isChecked: {{ isChecked ? 'TRUE' : 'FALSE' }}<br>
         </div>
     </template>
+    <script>
+        Vue.component('compOne', {
+            template: '#tempOne',
+            // 속성의 이름을 문자열 형태로 나열한다. 값은 기본적으로는 문자열.
+            // 내부에서 사용할 수 있는 읽기 전용 변수로 정의된다.
+            props: ['name', 'age', 'address', 'arr', 'user', 'onPlus', 'isChecked']
+        });
+    </script>
 
     
     <script type="text/javascript">
-        Vue.component('compOne', {
-            template: '#tempOne',
-        });
-
         var app = new Vue({
             el: '#app',
             data: {
@@ -43,6 +55,9 @@
             methods: {
                 onPlus: function(x, y) {
                     return `${x} + ${y} = ${x + y}`
+                },
+                changeAddress: function() {
+                    this.address = 'Busan';
                 }
             }
         });
