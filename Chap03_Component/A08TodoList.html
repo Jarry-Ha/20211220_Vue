@@ -27,9 +27,9 @@
     <template id="todoForm">
         <form>
             <div class="input-group">
-                <input type="text" class="form-control" v-model="text" />
+                <input type="text" class="form-control" v-model="text" ref="inputRef" />
                 <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary mr-1">Submit</button>
+                    <button type="submit" class="btn btn-primary mr-1" @click.prevent="sendData">Submit</button>
                 </div>
             </div>  
         </form>
@@ -42,7 +42,13 @@
                     text: ''
                 }
             },
-            
+            methods: {
+                sendData: function() {
+                    eventBus.$emit('sendtext', this.text);
+                    this.text = '';
+                    this.$refs.inputRef.focus();
+                }
+            }
         });
     </script>
 
@@ -59,11 +65,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td><span></span></td>
-                        <td><button class="btn btn-primary">Complete</button></td>
-                        <td><button class="btn btn-danger">Delete</button></td>
+                    <tr v-for="todo in todoList" :key="todo.id">
+                        <td>{{todo.id}}</td>
+                        <td><span :class="{done: todo.done}">{{todo.text}}</span></td>
+                        <td><button class="btn btn-primary" @click="updateTodo(todo.id)">Complete</button></td>
+                        <td><button class="btn btn-danger" @click="deleteTodo(todo.id)">Delete</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -72,6 +78,9 @@
     <script type="text/javascript">
         Vue.component('listComp', {
             template: '#todoList',
+            created: function(){
+                eventBus.$on('sendtext', this.addTodo);
+            },
             data: function() {
                 return {
                     todoList: [
@@ -82,7 +91,26 @@
                     id: 4,
                 }
             },
-            
+            methods: {
+                addTodo: function(text) {
+                    // console.log(text);
+                    var todo = { id: this.id++, text: text, done:false };
+                    this.todoList.push(todo);
+                },
+                updateTodo: function(id) {
+                    var index = this.todoList.findIndex( function(todo) {
+                        return todo.id === id;
+                    });
+                    this.todoList[index].done = !this.todoList[index].done;
+                },
+                deleteTodo: function(id) {
+                    var index = this.todoList.findIndex( function(todo) {
+                        return todo.id === id;
+                    });
+                    // delete는 에러
+                    this.todoList.splice(index, 1);
+                }
+            }
         });
     </script>
 
