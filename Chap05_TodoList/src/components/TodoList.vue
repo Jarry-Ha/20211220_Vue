@@ -11,15 +11,18 @@
                 </tr>
             </thead>
             <tbody>
-                
+                <TodoListItem v-for="todo in todoList" :key="todo.id" 
+                    :todo="todo" :updateTodo="updateTodo" :deleteTodo="deleteTodo" />
             </tbody>
         </table>
     </div>
 </template>
 
 <script>
+    import TodoListItem from './TodoListItem.vue'
     export default {
-        
+        components: {TodoListItem},
+        props: ['todoList', 'updateTodo', 'deleteTodo']
     }
 </script>
 
