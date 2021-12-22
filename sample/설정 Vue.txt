@@ -31,21 +31,29 @@ Vue 수업에 참조 할 사이트
 
 Vue 설치 및 프로젝트 생성
 설치
-    npm info @vue/cli
+    npm info @vue/cli                   이전 vue-cli라는 이름으로 제공.
+
+    Global로 설치한다. 프로젝트를 어느 위치에 만들지 모름. 어느 위치에서라도 만들 수 있도록 글로벌로 설치
     npm i -g @vue/cli
 
 버전 확인
     vue --version
 
 프로젝트 생성
-    vue create template
+    vue create projectName
+    ex) vue create template
 
+    cd template
     npm i bootstrap@4       sample이 bootstrap을 이용해서 만들어짐.
 
 
 프로젝트 시작
     cd projectName
     npm run serve
+
+프로젝트 종료
+    ctrl + c
+    
 
 프로젝트 빌드
     npm run build
