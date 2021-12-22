@@ -5,6 +5,9 @@
     사용자 정의 태그는 반드시 종료태그가 있어야 한다.<br>
     태그명, 속성명, 이벤트명은 - 표기법으로 바꾸지 않고 바로 사용 가능<br>
 
+    <todo-form></todo-form>
+    <todo-list></todo-list>
+
     <A07DynamicComp></A07DynamicComp><br>
 
     <A06ScopedSlot>
@@ -83,10 +86,13 @@ import A05SlotName from './components/A05SlotName.vue'
 import A06ScopedSlot from './components/A06ScopedSlot.vue'
 import A07DynamicComp from './components/A07DynamicComp.vue'
 
+import TodoForm from './components/TodoForm.vue'
+import TodoList from './components/TodoList.vue'
+
 export default {
   name: 'App',
   components: { A00Comp, A01Bind, A02Style, A03Module, A04Slot,
-    A05SlotName, A06ScopedSlot, A07DynamicComp
+    A05SlotName, A06ScopedSlot, A07DynamicComp, TodoForm, TodoList
   },
 }
 </script>

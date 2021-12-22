@@ -3,9 +3,7 @@
     <div>
         <ul>
             <li v-for="sub in subject" :key="sub.name">
-                {{sub.name}}
-                
-                <tree :subject="sub.subject"></tree>
+                {{sub.name}} 
             </li>
         </ul>
     </div>

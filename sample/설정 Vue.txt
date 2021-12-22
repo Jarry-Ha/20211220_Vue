@@ -61,4 +61,6 @@ Vue 설치 및 프로젝트 생성
 빌드 결과 확인
     npm i -g serve          설치는 최초 1번만 합니다.
 
-    serve -s build
+    serve -s dist
+
+    ctr + c 로 종료
