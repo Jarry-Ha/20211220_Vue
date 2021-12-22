@@ -3,19 +3,19 @@
         <h3>A05 Slot Name</h3>
 
         <header>
-            
+            <slot name="header"></slot>
         </header>
 
         <aside id="sidebar">
-            
+            <slot name="sidebar"></slot>
         </aside>
 
         <section id="content">
-            
+            <slot name="content"></slot>
         </section>
 
         <footer>
-            
+            <slot></slot>
         </footer>
     </div>
     
