@@ -37,6 +37,24 @@ export default {
         },
     },
 
+    // 이 컴퍼넌트에 진입 여부를 확인
+    beforeRouteEnter: function(to, from, next) {
+        console.log('Component 수준의 네이게이션 보호 => beforeRouterEnter');
+        
+        const storage = window.sessionStorage;
 
+        if(storage.getItem('tel') === '010') next(true)
+        else next(false)
+    },
+
+    // 진입 후 다른 패스로 이동하는 경우 이동 가능 여부 
+    beforeRouteLeave: function(to, from, next) {
+        console.log('Component 수준의 네이게이션 보호 => beforeRouterLeave');
+        
+        const storage = window.sessionStorage;
+
+        if(storage.getItem('address') === 'seoul') next(true)
+        else next(false)
+    }
 }
 </script>

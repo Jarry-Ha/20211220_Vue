@@ -98,20 +98,43 @@ const router = new VueRouter({
           { path: '/A07ChildRouter/view/:id',    component: A05ContactView }
         ]
     },
-    { path: '/A08Push',       component: A08Push },
+    { path: '/A08Push',       component: A08Push, 
+      beforeEnter: (to, from, next) => {
+        console.log('Router 수준의 네이게이션 보호 => beforeEach');
+        if(storage.getItem('admin') === 'abc') next(true)
+        else next(false)
+      }
+    },
 
     // 가장 아래에 존재해야 한다
     { path: '/*',             component: A09NotFound}
   ]
 });
 
+const storage = window.sessionStorage;
+storage.setItem('name', 'NolBu');
+storage.setItem('admin', 'abc');
+storage.setItem('tel', '010');
+storage.setItem('address', 'seoul');
+
+// storage.removeItem('name');
+
 // 전체 라우터에 Guard(네이게이션 보호)를 사용하는 경우
 // console.log(router);
 // next(false) => 이동 불가
 // next(true) => 이동 가능
-// to 현재 path => from 이동한 패스
+// to 이동한 곳 path => from 이동 전 패스
 router.beforeEach( (to, from, next) => {
+  console.log('전역 수준의 네이게이션 보호 => beforeEach')
+  // console.log(to);
+  // console.log(from);
 
+  if(storage.getItem('name')) next(true)
+  else next(false)
+});
+
+router.afterEach( (to, from) => {
+  console.log('전역 수준의 네이게이션 보호 => afterEach')
 })
 
 
