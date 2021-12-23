@@ -1,7 +1,7 @@
 <template>
   <div class="card-body">
 
-
+    <A02AxiosModal></A02AxiosModal>
 
     <hr>
 
@@ -11,12 +11,12 @@
 
 <script>
 import A01Axios from './components/A01Axios.vue'
-// import A02AxiosModal from './components/A02AxiosModal.vue'
+import A02AxiosModal from './components/A02AxiosModal.vue'
 
 export default {
   name: 'App',
   components: {
-    A01Axios, 
+    A01Axios, A02AxiosModal
   }
 }
 </script>
