@@ -22,7 +22,8 @@
                         </tr>
                         <tr>
                             <td colSpan="4">
-                                <b-button  variant="outline-danger" size="sm" @click="$bvModal.show('modalAddContact')">ADD</b-button>
+                                <b-button  variant="outline-danger" size="sm" 
+                                    @click="$bvModal.show('modalAddContact'); clearContact()">ADD</b-button>
                             </td>
                         </tr>
                     </tbody>
@@ -34,13 +35,14 @@
         <!-- Add Contact -->
         <b-modal id="modalAddContact" title="Add Contactt">
             <div>
-                Name: <input type="text" class="form-control" />
-                Tel: <input type="text" class="form-control"  />
-                Address: <input type="text" class="form-control" />
+                Name: <input type="text" class="form-control"       v-model="contact.name" />
+                Tel: <input type="text" class="form-control"        v-model="contact.tel" />
+                Address: <input type="text" class="form-control"    v-model="contact.address" />
             </div>
             <template #modal-footer>
                 <div class="w-100">
-                    <b-button variant="primary" size="sm" class="float-right" @click="$bvModal.hide('modalAddContact')">ADD</b-button>
+                    <b-button variant="primary" size="sm" class="float-right" 
+                        @click="$bvModal.hide('modalAddContact'); addContact(contact)">ADD</b-button>
                 </div>
             </template>
         </b-modal>
@@ -122,6 +124,15 @@ export default {
         },
         deleteContact: function(no) {
             axios.delete( '/api/contacts/' + no )
+            .then( () => this.getContactList(1, 10) )
+            .catch( error => console.error(error) )
+        },
+        clearContact() {
+            this.contact = {no: '', name: '', tel: '', address: ''};
+        },
+        addContact: function(data) {
+            // post
+            axios.post( '/api/contacts/', data )
             .then( () => this.getContactList(1, 10) )
             .catch( error => console.error(error) )
         },
