@@ -27,10 +27,10 @@
     </div> 
     <div class="example">
       <paginate
-        :page-count="20"
+        :page-count="totalPage"
         :page-range="3"
         :margin-pages="2"
-        :click-handler="null"
+        :click-handler="changePageEvent"
         :prev-text="'Prev'"
         :next-text="'Next'"
         :container-class="'pagination'"
@@ -49,8 +49,10 @@
     // https://www.npmjs.com/package/vuejs-paginate
     props: ['contactList'],
     components: { paginate },
-    mounted() {
-      console.log(this.contactList)
+    computed: {
+      totalPage() {
+        return Math.ceil( this.contactList.totalcount / this.contactList.pagesize )
+      }
     },
     methods: {
       updateViewEvent(no) {
@@ -64,6 +66,9 @@
       },
       deleteContactEvent(no) {
         EventBus.$emit('deleteContactEvent', no);
+      },
+      changePageEvent(page) {
+        EventBus.$emit('changePageEvent', page)
       }
     }
   }

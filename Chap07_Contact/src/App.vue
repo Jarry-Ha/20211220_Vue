@@ -69,6 +69,11 @@ export default {
     EventBus.$on('updatePhotoEvent', (no, file) => {
       this.updatePhoto(no, file);
       this.currentView = null;
+    });
+
+    // page 변경 요청
+    EventBus.$on('changePageEvent', (page) => {
+      this.getContactList(page)
     })
 
     // cancel
