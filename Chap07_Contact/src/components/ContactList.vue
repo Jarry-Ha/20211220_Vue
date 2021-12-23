@@ -11,13 +11,13 @@
             </tr>
         </thead>
         <tbody id="contacts">
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><img class="thumbnail"></td>
+            <tr v-for="contact in contactList.contacts" :key="contact.no">
+                <td>{{contact.name}}</td>
+                <td>{{contact.tel}}</td>
+                <td>{{contact.address}}</td>
+                <td><img class="thumbnail" :src="contact.photo" :alt="contact.name + '사진입니다'"></td>
                 <td>
-                    <button class="btn btn-primary">편집</button>
+                    <button class="btn btn-primary"     @click="updateViewEvent(contact.no)">편집</button>
                     <button class="btn btn-primary">삭제</button>
                 </td>
             </tr>
@@ -31,9 +31,17 @@
 </template>
 
 <script>
+  import EventBus from './EventBus.vue'
+
   export default {
     // npm i vuejs-paginate
     // https://www.npmjs.com/package/vuejs-paginate
+    props: ['contactList'],
+    methods: {
+      updateViewEvent(no) {
+        EventBus.$emit('updateViewEvent', no);
+      }
+    }
   }
 </script>
 

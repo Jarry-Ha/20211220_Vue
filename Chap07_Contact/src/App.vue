@@ -5,20 +5,25 @@
       <p>(Dynamic Component + EventBus + Axios) </p>
     </div>
     
-    <contactList></contactList>
+    <component :is="currentView" :contact="contact" ></component>
+    <contactList :contactList="contactList"></contactList>
   </div>
 </template>
 
 <script>
+import EventBus from './components/EventBus.vue'
+
 import ContactList from './components/ContactList.vue'
-// import AddContact from './components/AddContact.vue'
-// import UpdateContact from './components/UpdateContact.vue'
-// import UpdatePhoto from './components/UpdatePhoto.vue'
+import AddContact from './components/AddContact.vue'
+import UpdateContact from './components/UpdateContact.vue'
+import UpdatePhoto from './components/UpdatePhoto.vue'
+
+import { getContactListAction, getContactAction } from './api/contactApi'
 
 export default {
   name: 'App',
   components: {
-    ContactList, //AddContact, UpdateContact,UpdatePhoto, 
+    ContactList, AddContact, UpdateContact,UpdatePhoto, 
   },
   data: function() {
     return {
@@ -27,12 +32,26 @@ export default {
       contact: { no: 0, name: '', tel: '', address: '', photo: '' }
     }
   },
+  mounted() {
+    this.getContactList(1, 10)
+  },
+  created() {
+    EventBus.$on('updateViewEvent', (no) => {
+      this.getContact(no);
+      this.currentView = 'UpdateContact';
+    })
+  },
   methods: {
-    getContactList: function() {
-      
+    getContactList: function(no, size) {
+      getContactListAction(no, size)
+      .then( resp => this.contactList = resp.data )
+      .catch( error => console.error(error) )
     },
     getContact: function(no) {
-      console.log(no)
+      // console.log(no);
+      getContactAction(no)
+      .then( resp => this.contact = resp.data )
+      .catch( error => console.error(error) )
     },
     addContact: function(contact){
       console.log(contact)
