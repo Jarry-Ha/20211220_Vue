@@ -3,10 +3,10 @@
         <h3>A03 Params</h3>
 
         <div>
-            Name: <br>
-            No: <br>
-            Person: <br>
-            Hash: 
+            Name: {{name}} <br>
+            No: {{no}}<br>
+            Person: {{person.name}} / {{person.tel}}<br>
+            Hash: {{hashCode}}
         </div>
     </div>
 </template>
@@ -32,8 +32,23 @@ export default {
             contacts: contactlist.contacts,
         }
     },
+    mounted() {
+        console.log(this.$route)
+    },
     computed: {
-        
+        name() {
+            return this.$route.query.name
+        },
+        no() {
+            return this.$route.query.id
+        },
+        person() {
+            const person = this.contacts.find( contact => contact.no === Number(this.$route.query.id) );
+            return person;
+        },
+        hashCode() {
+            return this.$route.hash
+        }
     }
 }
 </script>

@@ -3,9 +3,9 @@
         <h3>A04 Props</h3>
 
         <div>
-            Name: <br>
-            No: <br>
-            Person: <br>
+             Name: {{name}}<br>
+            No: {{id}}<br>
+            Person: {{person.no}} / {{person.name}} / {{person.tel}}<br>
         </div>
     </div>
 </template>
@@ -26,13 +26,17 @@ let contactlist = {
 }
 
 export default {
+    props: ['id', 'name'],
     data: function() {
         return {
             contacts: contactlist.contacts,
         }
     },
     computed: {
-        
+        person() {
+            const person = this.contacts.find( contact => contact.no === Number(this.id) )
+            return person;
+        }
     }
 }
 </script>

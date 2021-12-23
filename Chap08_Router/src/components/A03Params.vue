@@ -3,9 +3,9 @@
         <h3>A03 Params</h3>
 
         <div>
-            Name: <br>
-            No: <br>
-            Person: <br>
+            Name: {{name}}<br>
+            No: {{no}}<br>
+            Person: {{person.no}} / {{person.name}} / {{person.tel}}<br>
         </div>
     </div>
 </template>
@@ -31,8 +31,20 @@ export default {
             contacts: contactlist.contacts,
         }
     },
-    created: function(){
-        
+    mounted() {
+        console.log(this.$route)
+    },
+    computed: {
+        name() {
+            return this.$route.params.name
+        },
+        no() {
+            return this.$route.params.id
+        },
+        person() {
+            const person = this.contacts.find( contact => contact.no === Number(this.$route.params.id) )
+            return person;
+        }
     },
 }
 </script>

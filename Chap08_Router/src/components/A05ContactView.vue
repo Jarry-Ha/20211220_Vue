@@ -6,19 +6,19 @@
             <tbody>
             <tr class="active">
                 <td>일련번호</td>
-                <td></td>
+                <td>{{person.no}}</td>
             </tr>
             <tr class="active">
                 <td>이름</td>
-                <td></td>
+                <td>{{person.name}}</td>
             </tr>
             <tr class="active">
                 <td>전화</td>
-                <td></td>
+                <td>{{person.tel}}</td>
             </tr>
             <tr class="active">
                 <td>주소</td>
-                <td></td>
+                <td>{{person.address}}</td>
             </tr>
             </tbody>
         </table>
@@ -36,7 +36,10 @@ export default {
         }
     },
     computed : {
-        
+        person() {
+            const index = this.contacts.findIndex( contact => contact.no === Number(this.$route.params.id) )
+            return this.contacts[index];
+        }
     }
 }
 </script>
