@@ -18,12 +18,12 @@ import AddContact from './components/AddContact.vue'
 import UpdateContact from './components/UpdateContact.vue'
 import UpdatePhoto from './components/UpdatePhoto.vue'
 
-import { getContactListAction, getContactAction } from './api/contactApi'
+import { getContactListAction, getContactAction, updateContactAction, addContactAction, deleteContactAction, updatePhotoAction } from './api/contactApi'
 
 export default {
   name: 'App',
   components: {
-    ContactList, AddContact, UpdateContact,UpdatePhoto, 
+    ContactList, AddContact, UpdateContact, UpdatePhoto, 
   },
   data: function() {
     return {
@@ -36,9 +36,44 @@ export default {
     this.getContactList(1, 10)
   },
   created() {
+    // update contact modal 표시
     EventBus.$on('updateViewEvent', (no) => {
       this.getContact(no);
       this.currentView = 'UpdateContact';
+    }),
+    // add contact modal 표시
+    EventBus.$on('addViewEvent', () => {
+      this.currentView = 'AddContact';
+    });
+    // update photo modal 표시
+    EventBus.$on('photoViewEvent', (no) => {
+      this.getContact(no);
+      this.currentView = 'UpdatePhoto';
+    });
+
+    // update 요청
+    EventBus.$on('updateContactEvent', (contact) => {
+      this.updateContact(contact);
+      this.currentView = null;
+    });
+    // add 요청
+    EventBus.$on('addContactEvent', (contact) => {
+      this.addContact(contact);
+      this.currentView = null;
+    });
+    // 삭제 요청
+    EventBus.$on('deleteContactEvent', (no) => {
+      this.deleteContact(no);
+    });
+    // 사진 변경 요청
+    EventBus.$on('updatePhotoEvent', (no, file) => {
+      this.updatePhoto(no, file);
+      this.currentView = null;
+    })
+
+    // cancel
+    EventBus.$on('cancelEvent', () => {
+      this.currentView = null;
     })
   },
   methods: {
@@ -54,16 +89,28 @@ export default {
       .catch( error => console.error(error) )
     },
     addContact: function(contact){
-      console.log(contact)
+      // console.log(contact);
+      addContactAction(contact)
+      .then( () => this.getContactList() )
+      .catch( (error) => console.error(error) )
     },
     updateContact: function(contact){
-      console.log(contact)
+      // console.log(contact)
+      updateContactAction(contact)
+      .then( () => this.getContactList() )
+      .catch( (error) => console.error(error) )
     },
     deleteContact: function(no){
-      console.log(no)
+      // console.log(no)
+      deleteContactAction(no)
+      .then( () => this.getContactList() )
+      .catch( (error) => console.error(error) )
     },
     updatePhoto: function(no, file) {
-      console.log(no, file);
+      // console.log(no, file);
+      updatePhotoAction(no, file)
+      .then( () => this.getContactList() )
+      .catch( (error) => console.error(error) )
     },
     changePage: function(page){
       console.log(page)

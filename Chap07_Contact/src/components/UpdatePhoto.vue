@@ -7,7 +7,7 @@
         <input type="hidden" name="no" class="long" disabled />
         <div>
           <label>현재 사진</label>
-          <img class="thumb"/>
+          <img class="thumb" :src="contact.photo" :alt="contact.name + ' 님 사진입니다' "/>
         </div>
         <div>
           <label>사진 파일 선택</label>
@@ -17,8 +17,8 @@
         </div>
         <div>
           <div>&nbsp;</div>
-          <input type="button" class="btn btn-primary" value="변 경">
-          <input type="button" class="btn btn-primary" value="취 소">
+          <input type="button" class="btn btn-primary" value="변 경"    @click="updatePhotoEvent(contact.no)">
+          <input type="button" class="btn btn-primary" value="취 소"    @click="cancelEvent">
         </div>
       </form>
     </div>
@@ -26,8 +26,20 @@
 </template>
 
 <script>
+import EventBus from './EventBus.vue'
+
 export default {
-  
+  props: ['contact'],
+  methods: {
+    cancelEvent() {
+      EventBus.$emit('cancelEvent')
+    },
+    updatePhotoEvent(no) {
+      const file = this.$refs.photofile.files[0];
+      // console.log(file);
+      EventBus.$emit('updatePhotoEvent', no, file);
+    }
+  }
 }
 </script>
 

@@ -2,42 +2,64 @@
 <template>
   <div class="modal">
     <div class="form">
-      <h3 class="heading">:: </h3>
-      <div class="form-group">
+      <h3 class="heading">:: {{title}}</h3>
+      <div class="form-group"                                   v-show="mode !== 'add'">
         <label>일련번호</label>
-        <input type="text" name="no" class="long" disabled>
+        <input type="text" name="no" class="long" disabled      :value="contact.no">
       </div>
       <div class="form-group">
         <label>이름</label>
-        <input type="text" name="name" class="long" placeholder="이름을 입력하세요" ref="name">
+        <input type="text" name="name" class="long" placeholder="이름을 입력하세요" ref="name"  v-model="contact.name">
       </div>
       <div class="form-group">
           <label>전화번호</label>
-          <input type="text" name="tel" class="long" placeholder="전화번호를 입력하세요">
+          <input type="text" name="tel" class="long" placeholder="전화번호를 입력하세요"         v-model="contact.tel">
       </div>
       <div class="form-group">
           <label>주 소</label>
-          <input type="text" name="address" class="long" placeholder="주소를 입력하세요">
+          <input type="text" name="address" class="long" placeholder="주소를 입력하세요"        v-model="contact.address">
       </div>
       <div class="form-group">
           <div>&nbsp;</div>
-          <input type="button" class="btn btn-primary">
-          <input type="button" class="btn btn-primary" value="취 소">
+          <input type="button" class="btn btn-primary" :value="btnTitle"   @click="updateContact(contact)">
+          <input type="button" class="btn btn-primary" value="취 소"        @click="cancelEvent">
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import EventBus from './EventBus.vue'
+
 export default {
   props: {
-    
+    mode: String,
+    contact: {
+      type: Object,
+      default: function() {
+        return {no: '', name: '', tel: '', address: ''}
+      }
+    }
   },
   computed: {
-    
+    title() {
+      return this.mode === 'add' ? '게시물 추가' : '게시물 수정'
+    },
+    btnTitle() {
+      return this.mode === 'add' ? '추가' : '수정'
+    }
   },
   methods: {
-    
+    cancelEvent() {
+      EventBus.$emit('cancelEvent')
+    },
+    updateContact(contact) {
+      if(this.mode === 'add') {
+        EventBus.$emit('addContactEvent', contact);
+      } else if(this.mode === 'update') {
+        EventBus.$emit('updateContactEvent', contact);
+      }
+    }  
   }
 }
 </script>

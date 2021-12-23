@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="addnew">
-      <button class="btn btn-primary">새로운 연락처 추가하기</button>
+      <button class="btn btn-primary"                 @click="addViewEvent">새로운 연락처 추가하기</button>
     </p>
     <div id="example">
       <table id="list" class="table table-striped table-bordered table-hover">
@@ -15,31 +15,55 @@
                 <td>{{contact.name}}</td>
                 <td>{{contact.tel}}</td>
                 <td>{{contact.address}}</td>
-                <td><img class="thumbnail" :src="contact.photo" :alt="contact.name + '사진입니다'"></td>
+                <td><img class="thumbnail" :src="contact.photo" :alt="contact.name + '사진입니다'"
+                      @click="photoViewEvent(contact.no)"></td>
                 <td>
                     <button class="btn btn-primary"     @click="updateViewEvent(contact.no)">편집</button>
-                    <button class="btn btn-primary">삭제</button>
+                    <button class="btn btn-primary"     @click="deleteContactEvent(contact.no)">삭제</button>
                 </td>
             </tr>
         </tbody>
       </table>
     </div> 
     <div class="example">
-      
+      <paginate
+        :page-count="20"
+        :page-range="3"
+        :margin-pages="2"
+        :click-handler="null"
+        :prev-text="'Prev'"
+        :next-text="'Next'"
+        :container-class="'pagination'"
+        :page-class="'page-item'">
+      </paginate>
     </div>
   </div>
 </template>
 
 <script>
   import EventBus from './EventBus.vue'
+  import paginate from 'vuejs-paginate'
 
   export default {
     // npm i vuejs-paginate
     // https://www.npmjs.com/package/vuejs-paginate
     props: ['contactList'],
+    components: { paginate },
+    mounted() {
+      console.log(this.contactList)
+    },
     methods: {
       updateViewEvent(no) {
         EventBus.$emit('updateViewEvent', no);
+      },
+      addViewEvent() {
+        EventBus.$emit('addViewEvent');
+      },
+      photoViewEvent(no) {
+        EventBus.$emit('photoViewEvent', no);
+      },
+      deleteContactEvent(no) {
+        EventBus.$emit('deleteContactEvent', no);
       }
     }
   }
