@@ -3,12 +3,12 @@
         <h3>A04 Plugin</h3>
 
         <div>
-            Mixin: <br>
-            Filter: <br>
-            Prototype: <br>
+            Mixin: {{pluginName}}<br>
+            Filter: {{ 'Hellow World' | lowercase }}<br>
+            Prototype: {{ onMin(10, 2) }}<br>
             <br>
 
-            <div>Hello World</div>
+            <div v-confirmBtn="'ALERT'" >Hello World</div>
         </div>
     </div>
 </template>

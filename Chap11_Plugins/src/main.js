@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './../node_modules/bootstrap/dist/css/bootstrap.css'
+import CustomPlugin from './modules/custom'
+
+Vue.use(CustomPlugin, {
+  name: 'NolBu'
+})
 
 Vue.config.productionTip = false
 
@@ -19,7 +24,7 @@ Vue.mixin({
       this.cnt -= 1;
     }
   }
-})
+});
 
 new Vue({
   render: h => h(App),

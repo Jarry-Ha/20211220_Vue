@@ -3,19 +3,21 @@
         <h3>A3 Directive</h3>
 
         <div>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" v-focus>
         </div>
         <br>
 
-        <div>Custom Directive</div>
+        <div v-view="true">Custom Directive</div>
         <br>
         
-        <div>
+        <div v-alertBtn="'CLICK'">
             Alert Event
         </div>
     </div>
 </template>
 <script>
+import './../modules/directive'
+
 export default {
     data() {
         return {
