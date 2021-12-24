@@ -9,7 +9,7 @@
         </div>
         <br />
         <button class="btn btn-outline-primary"     @click="moveUpdate">수정</button>
-        <button class="btn btn-outline-primary">삭제</button>
+        <button class="btn btn-outline-primary"     @click="moveContactList(contact.no)">삭제</button>
     </div>
 </template>
 
@@ -24,6 +24,13 @@ export default {
         })
     },
     methods: {
+        ...contactHelper.mapActions({
+            deleteContact: 'deleteContactAction'
+        }),
+        moveContactList(no) {
+            this.deleteContact(no);
+            this.$router.push('/ContactGetList')
+        },
         moveUpdate() {
             this.$router.push('/ContactUpdate')
         }
