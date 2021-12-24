@@ -11,15 +11,25 @@
                 </tr>
             </thead>
             <tbody>
-                
+                <TodoListItem v-for="todo in todoList" :key="todo.id" :todo="todo" />
             </tbody>
         </table>
     </div>
 </template>
 
 <script>
+    import TodoListItem from './TodoListItem.vue';
+
     export default {
-        
+        components: { TodoListItem },
+        computed: {
+            todoList() {
+                // return this.$store.state.todoListR.todoList;
+
+                // return this.$store.getters['todoListR/getTodoList']
+                return this.$store.getters['getTodoList']
+            }
+        }
     }
 </script>
 
