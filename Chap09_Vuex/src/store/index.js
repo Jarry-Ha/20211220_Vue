@@ -34,19 +34,19 @@ const store = new Vuex.Store({
       // console.log(payload)
       state.num = state.num + payload;
     },
-    [COUNT_DECREASE]: (state, payload) => {
+    [COUNT_DECREASE]: (state) => {
       state.num = state.num - 1;
     }
   },
   // 컴퍼넌트가 호출 할 메서를 정의. 이 메서드를 호출해서 값을 가공하고 그 가공된 값을 mutations에 전달.
   actions: {
     increaseAction: (action, value) => {
-      // console.log(action);
+      console.log(action);
       let data = Number(value);
       if(isNaN(data)) data = 0;
       action.commit(COUNT_INCREASE, data);
     },
-    decreaseAction: (action, value) => {
+    decreaseAction: (action) => {
       action.commit(COUNT_DECREASE);
     }
   },

@@ -25,8 +25,6 @@
         computed: {
             todoList() {
                 // return this.$store.state.todoListR.todoList;
-
-                // return this.$store.getters['todoListR/getTodoList']
                 return this.$store.getters['getTodoList']
             }
         }
