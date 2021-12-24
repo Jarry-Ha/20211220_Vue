@@ -6,6 +6,8 @@ import './../node_modules/bootstrap/dist/css/bootstrap.min.css'
 // 단일 스토어만 지원한다.
 import store from './store'
 
+// console.log(store)
+
 Vue.config.productionTip = false
 
 new Vue({
