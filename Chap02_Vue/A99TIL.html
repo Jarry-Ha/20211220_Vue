@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vue@2.6.14/dist/vue.min.js"
+    ></script>
+    <script>
+      if (undefined) console.log("false");
+    </script>
+    <title>A99 TIL</title>
+  </head>
+  <body>
+    <div id="app">
+      <h3>{{title}}</h3>
+      일반적인 단방향 바인딩 text: {{text}}<br />
+      함수의 리턴값: {{onAdd(10, 20)}}<br />
+      객체: {{user.name}} / {{user.age}} / {{user.address}} <br />
+      <button @click="changeText('Hi World')">Change text</button> <br />
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Kor</th>
+            <th>Eng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in students" :key="index">
+            <td>{{index + 1}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.age}}</td>
+            <td>{{item.kor}}</td>
+            <td>{{item.eng}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script type="text/javascript">
+      var app = new Vue({
+        el: "#app", // vue가 관리할 DOM을 지정한다.
+        data: {
+          // DOM에서 사용할 변수를 지정. template 문자열(``)를 ${}와 같이 vue에서는 {{}}로 사용
+          title: "A99 TIL",
+          user: { name: "HungBu", age: 20 },
+          text: "<b>Hello World</b>",
+          students: [
+            { name: "HongGilDong", age: 20, kor: 100, eng: 80 },
+            { name: "NolBu", age: 50, kor: 90, eng: 90 },
+            { name: "HungBu", age: 40, kor: 70, eng: 60 },
+          ],
+        },
+        methods: {
+          // 실행 함수를 정의.
+          onAdd: function (x, y) {
+            // console.log('일반 함수', this);                  // Vue 객체
+            console.log(this.title);
+            return x + " + " + y + " = " + (x + y);
+          },
+          changeText: function (text) {
+            // 내부 data 변수는 this로 참조한다. Arrow 함수는 안됨(this가 window)
+            this.text = "<b><i>" + text + "</i></b>";
+          },
+        },
+        computed: {},
+      });
+    </script>
+  </body>
+</html>
