@@ -1,24 +1,29 @@
-# A01_Variable
+# Chap01_JavaScript
+
+## A01_Variable
 
 ## ES5 이전
 
-### var 
+### var
+
 - 재 선언 하면 덮어씀
 - {} scope를 갖지 않음(var 변수만.)
-## ES6 문법 
 
-### let 
+## ES6 문법
+
+### let
+
 - 재 선언 불가
 - {} scope를 가짐
 
 ### const (상수)
+
 - 값 변경 불가.
 
-
-# A02_FunLiteral
+## A02_FunLiteral
 
 ## ES5. 함수 리터럴
- 
+
 ```javascript
 var sayHello = fucntion() {return 1;};
 ```
@@ -26,19 +31,20 @@ var sayHello = fucntion() {return 1;};
 => 재선언, scope에 문제 있으니 let으로 사용
 
 ## ES6. Function
- 
+
 ```javascript
 let sayHello = fucntion() {return 1;};
 ```
 
-# A03_TemplateLiteral
+## A03_TemplateLiteral
+
 ```javascript
 console.log(this.name, '님의 나이는 ', this.age, '세 입니다');
 // ES6 - tempate 문자열
 console.log(`${this.name}님의 나이는 ${this.age}입니다.`);
 ```
 
-# A04_ArrowFn
+## A04_ArrowFn
 
 ```javascript
 
@@ -65,22 +71,22 @@ let onDouble = x => x ** 3;             // ** ES6에 추가된 연산자 2 ** 3 
 
 ```
 
-# A05_ArrowMap
+## A05_ArrowMap
 
 - 어려워서 패스하겠다.
 
-# A06_SpreadOperator
+## A06_SpreadOperator
 
 ```javascript
 console.log( ...[10, 11, 100] );
 // 개별 요소 형태로 출력. for 구문 돌려서 1개씩 출력하는 것과 동일한 효과
 ```
 
-# A07_Destructuring
+## A07_Destructuring
 
 - 사용처를 모르겠다. 패스.
 
-# A08_ClassES5
+## A08_ClassES5
 
 ```javascript
 // ClassES5 객체 생성방법
@@ -93,7 +99,7 @@ function User(name, age) {
 }
 ```
 
-# A09_ClassES6
+## A09_ClassES6
 
 ```javascript
 // ClassES6 객체 생성방법
@@ -111,7 +117,8 @@ let nolbu = new User('NolBu', 30);
 nolbu.info();
 ```
 
-# A10_GetterSetter
+## A10_GetterSetter
+
 - 정확한 사용법은 파일 참조
 
 ```javascript
@@ -127,8 +134,9 @@ set kor(num) {
 }
 ```
 
-# A11_Inheritance
+## A11_Inheritance
+
 - 상속 관련 내용... backend 관련임
 
-# A12_ExportModule
+## A12_ExportModule
   

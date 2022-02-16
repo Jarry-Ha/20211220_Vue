@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+    <title>A00VueByJS</title>
+</head>
+<body>
+        
+    <div id="app">
+        <compone></compone>
+    </div>
+    <template id="compone">
+        <div>
+            <h3>Custom Component</h3>
+
+            <div>
+                Title: {{title}}
+            </div>
+            <div>
+                <button @click="changeTitle('놀부')">changeTitle('놀부')</button>
+            </div>
+        </div>
+    </template>
+</body>
+<script>
+    Vue.component('compone',{
+        template: '#compone',
+        data: function() {
+            return {
+                title: 'A00VueByJS',
+            }
+        },
+        methods: {
+            changeTitle: function(text){
+                this.title = text
+            }
+        }
+    })
+
+    var app = new Vue({
+        el: '#app'
+    })
+</script>
+</html>
