@@ -1,20 +1,36 @@
 <template>
   <div id="app">
-    <StudyTest msg="Welcome to Your Vue.js App">
-            This is App Content 01 
-    </StudyTest>
+    <StudyTest></StudyTest>
+    <br />
+    <A01Slot></A01Slot>
+    <br />
+    <A05SlotName>
+      <template v-slot:header> 
+        <h2>Header</h2>  
+      </template>
+      <template v-slot:sidebar> 
+        <h2>sidebar</h2>  
+      </template>
+      <template v-slot:content> 
+        <h2>content</h2>  
+      </template>
+    </A05SlotName>
   </div>
 </template>
 
 <script>
-import StudyTest from './components/StudyTest.vue'
+import StudyTest from "./components/StudyTest.vue";
+import A01Slot from "./components/A01Slot.vue";
+import A05SlotName from "./components/A05SlotName.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    StudyTest
-  }
-}
+    StudyTest,
+    A01Slot,
+    A05SlotName,
+  },
+};
 </script>
 
 <style>
